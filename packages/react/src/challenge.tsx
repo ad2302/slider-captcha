@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { ArrowIcon, SuccessIcon, FailureIcon } from './icons';
 import { Buffer } from 'buffer';
+import { ArrowIcon, SuccessIcon, FailureIcon } from './icons';
 
-const imageDataUrl = image => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
+const imageDataUrl = (image) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
 
 const slider = {
   default: {
@@ -42,9 +42,9 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
   });
 
   // Converts distances along the control track to corresponding distances moved by the puzzle piece
-  const scaleSliderPosition = x => 5 + 0.86 * x;
+  const scaleSliderPosition = (x) => 5 + 0.86 * x;
 
-  const handleStart = e => {
+  const handleStart = (e) => {
     if (submittedResponse) return;
     setOrigin({
       x: e.clientX || e.touches[0].clientX,
@@ -54,7 +54,7 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
     setSliderVariant(slider.active);
   };
 
-  const handleMove = e => {
+  const handleMove = (e) => {
     if (!solving || submittedResponse) return;
     const move = {
       x: (e.clientX || e.touches[0].clientX) - origin.x,
@@ -73,7 +73,7 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
     completeCaptcha(
       scaleSliderPosition(trail.x[trail.x.length - 1]),
       trail,
-    ).then(validated => {
+    ).then((validated) => {
       setSliderVariant(validated ? slider.success : slider.failure);
     });
   };

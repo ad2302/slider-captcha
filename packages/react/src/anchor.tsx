@@ -10,7 +10,6 @@ const Anchor = ({
   submitResponse,
   verified,
 }) => {
-
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (_visible !== open) {
@@ -18,9 +17,9 @@ const Anchor = ({
     }
   }, [_visible, open]);
 
-  const handleClose = () => { setOpen(false) };
-  const handleOpen = () => { setOpen(true) };
-  const handleKey = e => {
+  const handleClose = () => { setOpen(false); };
+  const handleOpen = () => { setOpen(true); };
+  const handleKey = (e) => {
     if (e.code === 'Enter' || e.code === 'Space') {
       setOpen(true);
     } else if (e.key === 'Escape') {

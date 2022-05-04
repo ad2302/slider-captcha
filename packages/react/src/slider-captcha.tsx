@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 import Anchor from './anchor';
 import Theme from './theme';
 
-const fetchCaptcha = create => () => ((create instanceof Function)
+const fetchCaptcha = (create) => () => ((create instanceof Function)
   ? create() // Use provided promise for getting background and slider
   : fetch(create, {
     // Use create as API URL for fetch
     method: 'GET',
     credentials: 'include',
-  }).then(message => message.json()));
+  }).then((message) => message.json()));
 
-const fetchVerification = verify => (response, trail) => ((verify instanceof Function)
+const fetchVerification = (verify) => (response, trail) => ((verify instanceof Function)
   ? verify(response, trail) // Use provided promise for verifying captcha
   : fetch(verify, {
     // Verification API URL provided instead
@@ -25,7 +25,7 @@ const fetchVerification = verify => (response, trail) => ((verify instanceof Fun
       response,
       trail,
     }),
-  }).then(message => message.json()));
+  }).then((message) => message.json()));
 
 const SliderCaptcha = ({
   callback,
@@ -33,7 +33,7 @@ const SliderCaptcha = ({
   verify,
   variant,
   text,
-  visible:_visible,
+  visible: _visible,
 }) => {
   const [verified, setVerified] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -42,9 +42,9 @@ const SliderCaptcha = ({
       setVisible(_visible);
     }
   }, [_visible, visible]);
-  const submitResponse = (response, trail) => new Promise(resolve => {
+  const submitResponse = (response, trail) => new Promise((resolve) => {
     fetchVerification(verify)(response, trail)
-      .then(verification => {
+      .then((verification) => {
         if (
           !verification.result
             || verification.result !== 'success'
@@ -86,7 +86,7 @@ SliderCaptcha.propTypes = {
 };
 
 SliderCaptcha.defaultProps = {
-  callback: token => console.log(token), // eslint-disable-line no-console
+  callback: (token) => console.log(token), // eslint-disable-line no-console
   create: 'captcha/create',
   verify: 'captcha/verify',
   variant: 'light',

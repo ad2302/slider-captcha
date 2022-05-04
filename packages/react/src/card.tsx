@@ -32,7 +32,7 @@ const Card = ({ text, fetchCaptcha, submitResponse }) => {
   useEffect(() => {
     isMounted.current = true;
     refreshCaptcha();
-    return () => { isMounted.current = false };
+    return () => { isMounted.current = false; };
   }, []);
 
   return (

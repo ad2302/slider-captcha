@@ -1,5 +1,7 @@
 {
   "extends": "airbnb",
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "globals": {
     "fetch": false,
     "test": false,
@@ -7,6 +9,7 @@
   },
   "rules": {
     "no-confusing-arrow": "off",
+    "import/extensions": [0, "ignorePackages"],
     "implicit-arrow-linebreak": "off",
     "indent": "off",
     "react/jsx-filename-extension": "off",

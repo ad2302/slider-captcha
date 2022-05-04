@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "lint": "eslint ./",
-    "fix": "eslint --fix ./",
+    "lint": "eslint --ext .ts,tsx src",
+    "lint:fix": "eslint --ext .ts,tsx --fix src",
     "sass": "sass --no-source-map src",
     "scripts": "node scripts/themes",
     "babel": "babel src -d ./lib --ignore '**/*.test.js'",
