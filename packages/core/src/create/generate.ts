@@ -1,15 +1,15 @@
 const randInt = (min = 0, max = 2147483646) =>
   Math.floor(Math.random() * (max - min + 1) + min);
 
-const randShade = (hue) => ({
+const randShade = (hue: number) => ({
   h: hue,
   s: randInt(50, 70),
   l: randInt(50, 60),
 });
 
-const hslString = (color) => `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
+const hslString = (color: { h: number; s: number; l: number; }) => `hsl(${color.h}, ${color.s}%, ${color.l}%)`;
 
-const randScheme = (base) => [
+const randScheme = (base: number) => [
   randShade(base),
   randShade((base + 60) % 360),
   randShade((base - 30) % 360),
@@ -17,10 +17,10 @@ const randScheme = (base) => [
   randShade((base - 60) % 360),
 ].map((color) => hslString(color));
 
-const svgRect = (x, y, gridWidth, gridHeight, color) =>
+const svgRect = (x: number, y: number, gridWidth: number, gridHeight: number, color: any) =>
   `<rect filter="url(#noise)" x="${x}" y="${y}" width="${gridWidth}" height="${gridHeight}" fill="${color}"/>`;
 
-const svgGridPattern = (width, height, gridWidth, gridHeight, scheme) =>
+const svgGridPattern = (width: number, height: number, gridWidth: number, gridHeight: number, scheme: any[]) =>
   [...Array(Math.floor(height / gridHeight)).keys()].map((y) =>
     [...Array(Math.floor(width / gridWidth)).keys()].map((x) =>
       svgRect(x * gridWidth, y * gridHeight, gridWidth, gridHeight, scheme[x % 2])))
@@ -28,8 +28,8 @@ const svgGridPattern = (width, height, gridWidth, gridHeight, scheme) =>
   .join('');
 
 const backgroundSvg = (
-  width,
-  height,
+  width: number,
+  height: number,
   {
     gridWidth = randInt(5, 50),
     gridHeight = randInt(5, 50),
