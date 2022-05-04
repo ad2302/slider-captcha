@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import sharp = require('sharp');
 import { randInt, puzzlePieceSvg, backgroundSvg } from './generate';
 
 const sizes = ({
@@ -16,7 +16,13 @@ const createCaptcha = ({
   stroke = '#fff',
   strokeWidth = '.4',
   opacity = '0.5',
-} = {}) => {
+} = {}): Promise<{
+  data: {
+    background: Buffer,
+    slider: Buffer,
+  },
+  solution: number,
+}> => {
   const seed = randInt();
   const overlay = Buffer.from(
     puzzlePieceSvg({
@@ -57,7 +63,7 @@ const createCaptcha = ({
     // Vertical offset
     top: randInt(sizes.PADDING, sizes.HEIGHT - (sizes.PUZZLE + sizes.PADDING)),
   };
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     sharp(image)
       .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
       .composite([
@@ -70,7 +76,7 @@ const createCaptcha = ({
       ])
       .png()
       .toBuffer()
-      .then((background) => {
+      .then(background => {
         sharp(image)
           .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
           .composite([
@@ -95,7 +101,7 @@ const createCaptcha = ({
           })
           .png()
           .toBuffer()
-          .then((slider) => {
+          .then(slider => {
             resolve({
               data: {
                 background,

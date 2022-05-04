@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from './card';
-import { SuccessIcon } from './icons';
+// import { SuccessIcon } from './icons';
 
 const Anchor = ({
   text,
+  visible: _visible,
   fetchCaptcha,
   submitResponse,
   verified,
 }) => {
+
   const [open, setOpen] = useState(false);
-  const handleClose = () => { setOpen(false); };
-  const handleOpen = () => { setOpen(true); };
-  const handleKey = (e) => {
+  useEffect(() => {
+    if (_visible !== open) {
+      setOpen(_visible);
+    }
+  }, [_visible, open]);
+
+  const handleClose = () => { setOpen(false) };
+  const handleOpen = () => { setOpen(true) };
+  const handleKey = e => {
     if (e.code === 'Enter' || e.code === 'Space') {
       setOpen(true);
     } else if (e.key === 'Escape') {
@@ -21,7 +29,7 @@ const Anchor = ({
   };
   return (
     <div>
-      <div
+      {/* <div
         className="scaptcha-anchor-container scaptcha-anchor-element"
         onClick={handleOpen}
       >
@@ -38,7 +46,7 @@ const Anchor = ({
         <div className="scaptcha-anchor-label scaptcha-anchor-element">
           {text.anchor}
         </div>
-      </div>
+      </div> */}
       {!verified && open && (
         <div>
           <div className="scaptcha-hidden" onClick={handleClose} />
