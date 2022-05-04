@@ -2,14 +2,25 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { LoadingIcon } from './icons';
 import Challenge from './challenge';
-
-const Card = ({ text, fetchCaptcha, submitResponse }) => {
+import type { Trail } from './slider-captcha';
+type Captcha = {
+  slider: Array<number>
+  background: Array<number>
+}
+type Props = {
+  fetchCaptcha: () => Promise<Captcha>
+  submitResponse: (_:Response, trail:Trail) => any
+  text:  {
+    challenge:React.ReactNode
+  }
+}
+const Card = ({ text, fetchCaptcha, submitResponse }: Props) => {
   const [key, setKey] = useState(Math.random());
-  const [captcha, setCaptcha] = useState(false);
+  const [captcha, setCaptcha] = useState<Captcha>();
   const isMounted = useRef(false);
 
   const refreshCaptcha = () => {
-    fetchCaptcha().then((newCaptcha) => {
+    fetchCaptcha().then((newCaptcha: Captcha) => {
       setTimeout(() => {
         if (!isMounted.current) return;
         setKey(Math.random());
@@ -17,9 +28,9 @@ const Card = ({ text, fetchCaptcha, submitResponse }) => {
       }, 300);
     });
   };
-  const completeCaptcha = (response, trail) =>
+  const completeCaptcha = (response: any, trail: any): Promise<boolean> =>
     new Promise((resolve) => {
-      submitResponse(response, trail).then((verified) => {
+      submitResponse(response, trail).then((verified: boolean) => {
         if (verified) {
           resolve(true);
         } else {

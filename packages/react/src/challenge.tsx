@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Buffer } from 'buffer';
 import { ArrowIcon, SuccessIcon, FailureIcon } from './icons';
-
-const imageDataUrl = (image) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
-
+import type { Trail } from './slider-captcha';
+const imageDataUrl = (image:  Array<number>) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
+type ReactMouseOrTouchEventHandler = React.MouseEventHandler<HTMLDivElement> | React.TouchEventHandler<HTMLDivElement>
+type ReactMouseOrTouchEvent = React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>
 const slider = {
   default: {
     track: 'scaptcha-card-slider-track-default',
@@ -27,8 +28,18 @@ const slider = {
     icon: <FailureIcon />,
   },
 };
+type Props = {
+  text: {
+    challenge:React.ReactNode
+  }
+  completeCaptcha: (a:number, b:Trail) => Promise<boolean>
+  captcha: {
+    slider: Array<number>
+    background: Array<number>
+  }
+}
 
-const Challenge = ({ text, captcha, completeCaptcha }) => {
+const Challenge = ({ text, captcha, completeCaptcha }: Props) => {
   const [sliderVariant, setSliderVariant] = useState(slider.default);
   const [solving, setSolving] = useState(false);
   const [submittedResponse, setSubmittedResponse] = useState(false);
@@ -42,23 +53,23 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
   });
 
   // Converts distances along the control track to corresponding distances moved by the puzzle piece
-  const scaleSliderPosition = (x) => 5 + 0.86 * x;
+  const scaleSliderPosition = (x: number) => 5 + 0.86 * x;
 
-  const handleStart = (e) => {
+  const handleStart: ReactMouseOrTouchEventHandler = (e: ReactMouseOrTouchEvent) => {
     if (submittedResponse) return;
     setOrigin({
-      x: e.clientX || e.touches[0].clientX,
-      y: e.clientY || e.touches[0].clientY,
+      x: (e as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>).clientX || (e as unknown as React.TouchEvent<HTMLDivElement>).touches[0].clientX,
+      y: (e as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>).clientY || (e as unknown as React.TouchEvent<HTMLDivElement>).touches[0].clientY,
     });
     setSolving(true);
     setSliderVariant(slider.active);
   };
 
-  const handleMove = (e) => {
+  const handleMove: ReactMouseOrTouchEventHandler = (e: ReactMouseOrTouchEvent) => {
     if (!solving || submittedResponse) return;
     const move = {
-      x: (e.clientX || e.touches[0].clientX) - origin.x,
-      y: (e.clientY || e.touches[0].clientY) - origin.y,
+      x: ((e as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>).clientX || (e as unknown as React.TouchEvent<HTMLDivElement>).touches[0].clientX) - origin.x,
+      y: ((e as unknown as React.MouseEvent<HTMLDivElement, MouseEvent>).clientY || (e as unknown as React.TouchEvent<HTMLDivElement>).touches[0].clientY) - origin.y,
     };
     if (move.x > 225 || move.x < 0) return; // Don't update if outside bounds of captcha
     setTrail({
@@ -92,8 +103,8 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
     <div
       className="scaptcha-card-element"
       draggable="false"
-      onMouseMove={handleMove}
-      onTouchMove={handleMove}
+      onMouseMove={handleMove as unknown as  React.MouseEventHandler<HTMLDivElement>}
+      onTouchMove={handleMove as unknown as React.TouchEventHandler<HTMLDivElement>}
       onTouchEnd={handleEnd}
       onMouseUp={handleEnd}
       onMouseLeave={handleEnd}
@@ -110,8 +121,8 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
           backgroundImage: `url('${imageDataUrl(captcha.slider)}')`,
           left: `${scaleSliderPosition(trail.x[trail.x.length - 1])}px`,
         }}
-        onMouseDown={handleStart}
-        onTouchStart={handleStart}
+        onMouseDown={handleStart as unknown as React.MouseEventHandler<HTMLDivElement>}
+        onTouchStart={handleStart as unknown as React.TouchEventHandler<HTMLDivElement>}
       />
       <div className="scaptcha-card-slider-container scaptcha-card-element">
         <div className="scaptcha-card-slider-track scaptcha-card-element" />
@@ -132,8 +143,8 @@ const Challenge = ({ text, captcha, completeCaptcha }) => {
         <div
           className={`scaptcha-card-slider-control ${sliderVariant.control} scaptcha-card-element`}
           style={{ left: `${trail.x[trail.x.length - 1]}px` }}
-          onMouseDown={handleStart}
-          onTouchStart={handleStart}
+          onMouseDown={handleStart as unknown as React.MouseEventHandler<HTMLDivElement>}
+          onTouchStart={handleStart as unknown as React.TouchEventHandler<HTMLDivElement>}
           onMouseEnter={handleEnter}
           onMouseLeave={handleLeave}
         >

@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from './card';
+import type { Trail } from './slider-captcha';
 // import { SuccessIcon } from './icons';
+type Captcha = {
+  slider: Array<number>
+  background: Array<number>
+}
 
+type Props = {
+  fetchCaptcha:  () => Promise<Captcha>
+  visible: boolean
+  submitResponse: (_:Response, trail:Trail) => any
+  verified: boolean
+  text: {
+    challenge:React.ReactNode
+  }
+}
 const Anchor = ({
   text,
   visible: _visible,
   fetchCaptcha,
   submitResponse,
   verified,
-}) => {
+}: Props) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (_visible !== open) {
@@ -18,14 +32,14 @@ const Anchor = ({
   }, [_visible, open]);
 
   const handleClose = () => { setOpen(false); };
-  const handleOpen = () => { setOpen(true); };
-  const handleKey = (e) => {
-    if (e.code === 'Enter' || e.code === 'Space') {
-      setOpen(true);
-    } else if (e.key === 'Escape') {
-      setOpen(false);
-    }
-  };
+  // const handleOpen = () => { setOpen(true); };
+  // const handleKey = (e) => {
+  //   if (e.code === 'Enter' || e.code === 'Space') {
+  //     setOpen(true);
+  //   } else if (e.key === 'Escape') {
+  //     setOpen(false);
+  //   }
+  // };
   return (
     <div>
       {/* <div
