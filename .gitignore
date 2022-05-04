@@ -11,3 +11,5 @@ tsconfig.tsbuildinfo
 .turbo
 build/**
 dist/**
+.rollup.cache
+dist/
