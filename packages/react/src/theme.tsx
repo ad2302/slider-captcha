@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import lightTheme from './style/light';
-import darkTheme from './style/dark';
+
+import lightTheme from './style/light.scss';
+import darkTheme from './style/dark.scss';
+
 export type ThemeVariant = 'dark' | 'light';
 type Props = {
   variant: ThemeVariant;

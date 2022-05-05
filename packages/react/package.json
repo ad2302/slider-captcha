@@ -35,8 +35,10 @@
   },
   "homepage": "https://github.com/adrsch/slider-captcha#readme",
   "dependencies": {
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "react": ">=16.8.0"
+    "react": ">=16.8.0",
+    "sass-migrator": "^1.5.4"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

@@ -26,6 +26,10 @@ export default {
     resolve(),
     commonjs(),
     typescript(),
-    postcss()
+    postcss({
+      extract: false,
+      modules: false,
+      use: ['sass'],
+    }),
   ]
 };

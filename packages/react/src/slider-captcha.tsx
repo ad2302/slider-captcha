@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Anchor from './anchor';
 import Theme, { ThemeVariant } from './theme';
+
+
 export type Trail = {
   x: number[]
   y: number[]
