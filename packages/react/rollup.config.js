@@ -5,6 +5,7 @@ import typescript from '@rollup/plugin-typescript';
 import postcss from "rollup-plugin-postcss";
 import json from '@rollup/plugin-json';
 import packageJson from "./package.json";
+import image from '@rollup/plugin-image';
 
 export default {
   input: "src/index.ts",
@@ -31,5 +32,6 @@ export default {
       modules: false,
       use: ['sass'],
     }),
+    image(),
   ]
 };
