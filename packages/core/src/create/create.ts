@@ -41,8 +41,8 @@ const createCaptcha = ({
       distort,
       seed,
       strokeWidth,
-      fill: '#fff',
-      stroke: '#fff',
+      fill: '#000',
+      stroke: '#000',
       opacity: '1',
     }),
   );
@@ -63,9 +63,9 @@ const createCaptcha = ({
     // Vertical offset
     top: randInt(sizes.PADDING, sizes.HEIGHT - (sizes.PUZZLE + sizes.PADDING)),
   };
-  return new Promise((resolve) => {
-    sharp(image)
-      .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
+  const ins = sharp(image)
+  .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
+  return ins
       .composite([
         {
           input: overlay,
@@ -76,9 +76,8 @@ const createCaptcha = ({
       ])
       .png()
       .toBuffer()
-      .then((background) => {
-        sharp(image)
-          .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
+      .then(async (background) => {
+        const composed = await ins
           .composite([
             {
               input: mask,
@@ -92,8 +91,8 @@ const createCaptcha = ({
               top: location.top,
               left: location.left,
             },
-          ])
-          .extract({
+          ]).toBuffer()
+        return  sharp(composed).extract({
             left: location.left,
             top: 0,
             width: sizes.PUZZLE,
@@ -102,16 +101,23 @@ const createCaptcha = ({
           .png()
           .toBuffer()
           .then((slider) => {
-            resolve({
+            return {
               data: {
                 background,
                 slider,
               },
               solution: location.left,
-            });
+            };
           });
       });
-  });
+  
 };
 
 export default createCaptcha;
+
+if (typeof require !== 'undefined' && require.main === module) {
+  createCaptcha().then( r => {
+    sharp(r.data.slider).toFile('slider.png')
+    sharp(r.data.background).toFile('background.png')
+  })
+}

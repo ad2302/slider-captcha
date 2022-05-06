@@ -13,3 +13,6 @@ build/**
 dist/**
 .rollup.cache
 dist/
+.parcel-cache
+background.png
+slider.png
