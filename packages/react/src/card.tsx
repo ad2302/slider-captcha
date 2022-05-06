@@ -4,8 +4,14 @@ import { LoadingIcon } from './icons';
 import Challenge from './challenge';
 import type { Trail } from './slider-captcha';
 type Captcha = {
-  slider: Array<number>
-  background: Array<number>
+  slider: {
+    type: string,
+    data: Array<number>
+  }
+  background:{
+    type: string,
+    data: Array<number>
+  }
 }
 type Props = {
   fetchCaptcha: () => Promise<Captcha>

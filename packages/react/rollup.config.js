@@ -6,6 +6,7 @@ import postcss from "rollup-plugin-postcss";
 import json from '@rollup/plugin-json';
 import packageJson from "./package.json";
 import image from '@rollup/plugin-image';
+import path from 'path';
 
 export default {
   input: "src/index.ts",
@@ -25,8 +26,14 @@ export default {
     json(),
     peerDepsExternal(),
     resolve(),
+    typescript({
+      "target": 'es2015',
+      declaration: true,
+      declarationDir: 'typing',
+      // "typeRoots": [path.join(__dirname,'types')],
+      tsconfig: path.join(__dirname,'tsconfig.json'),
+    }),
     commonjs(),
-    typescript(),
     postcss({
       extract: false,
       modules: false,

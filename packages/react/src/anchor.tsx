@@ -4,10 +4,15 @@ import Card from './card';
 import type { Trail } from './slider-captcha';
 // import { SuccessIcon } from './icons';
 type Captcha = {
-  slider: Array<number>
-  background: Array<number>
+  slider: {
+    type: string,
+    data: Array<number>
+  }
+  background:{
+    type: string,
+    data: Array<number>
+  }
 }
-
 type Props = {
   fetchCaptcha:  () => Promise<Captcha>
   visible: boolean

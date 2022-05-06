@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Buffer } from 'buffer';
 import { ArrowIcon, SuccessIcon, FailureIcon } from './icons';
 import type { Trail } from './slider-captcha';
-const imageDataUrl = (image:  Array<number>) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
+const imageDataUrl = (image: any) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
 type ReactMouseOrTouchEventHandler = React.MouseEventHandler<HTMLDivElement> | React.TouchEventHandler<HTMLDivElement>
 type ReactMouseOrTouchEvent = React.MouseEvent<HTMLDivElement, MouseEvent> | React.TouchEvent<HTMLDivElement>
 const slider = {
@@ -34,8 +34,14 @@ type Props = {
   }
   completeCaptcha: (a:number, b:Trail) => Promise<boolean>
   captcha: {
-    slider: Array<number>
-    background: Array<number>
+    slider: {
+      type: string,
+      data: Array<number>
+    }
+    background: {
+      type: string,
+      data:  Array<number>
+    }
   }
 }
 
