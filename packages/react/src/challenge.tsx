@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Buffer } from 'buffer';
+import { Buffer } from 'buffer/';
 import { ArrowIcon, SuccessIcon, FailureIcon } from './icons';
 import type { Trail } from './slider-captcha';
 const imageDataUrl = (image: any) => `data:image/png;base64,${Buffer.from(image).toString('base64')}`;
