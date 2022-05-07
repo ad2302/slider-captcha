@@ -8,7 +8,7 @@ const sizes = ({
   PADDING: 20,
 });
 
-const createCaptcha = ({
+const createCaptcha = async ({
   image = Buffer.from(backgroundSvg(sizes.WIDTH, sizes.HEIGHT)),
   distort = false,
   rotate = false,
@@ -65,51 +65,47 @@ const createCaptcha = ({
   };
   const ins = sharp(image)
   .resize({ width: sizes.WIDTH, height: sizes.HEIGHT })
-  return ins
-      .composite([
-        {
-          input: overlay,
-          blend: 'over',
-          top: location.top,
-          left: location.left,
-        },
-      ])
-      .png()
-      .toBuffer()
-      .then(async (background) => {
-        const composed = await ins
-          .composite([
-            {
-              input: mask,
-              blend: 'dest-in',
-              top: location.top,
-              left: location.left,
-            },
-            {
-              input: outline,
-              blend: 'over',
-              top: location.top,
-              left: location.left,
-            },
-          ]).toBuffer()
-        return  sharp(composed).extract({
-            left: location.left,
-            top: 0,
-            width: sizes.PUZZLE,
-            height: sizes.HEIGHT,
-          })
-          .png()
-          .toBuffer()
-          .then((slider) => {
-            return {
-              data: {
-                background,
-                slider,
-              },
-              solution: location.left,
-            };
-          });
-      });
+  const background = await ins
+    .composite([
+      {
+        input: overlay,
+        blend: 'over',
+        top: location.top,
+        left: location.left,
+      },
+    ])
+    .png()
+    .toBuffer();
+  const composed = await ins
+    .composite([
+      {
+        input: mask,
+        blend: 'dest-in',
+        top: location.top,
+        left: location.left,
+      },
+      {
+        input: outline,
+        blend: 'over',
+        top: location.top,
+        left: location.left,
+      },
+    ]).toBuffer();
+  const slider = await sharp(composed).extract({
+    left: location.left,
+    top: 0,
+    width: sizes.PUZZLE,
+    height: sizes.HEIGHT,
+  })
+    .png()
+    .toBuffer();
+  return {
+    data: {
+      background,
+      slider,
+    },
+    solution: location.left,
+  };
   
 };
 
