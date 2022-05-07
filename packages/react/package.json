@@ -4,15 +4,13 @@
   "description": "User-friendly puzzle slider captcha for React and Express",
   "main": "dist/index.js",
   "files": [
-    "/lib",
-    "/index.js"
+    "/dist"
   ],
   "types": "dist/typing",
   "scripts": {
     "test": "jest",
     "lint": "eslint --ext .ts,.tsx src",
     "lint:fix": "eslint --ext .ts,tsx --fix src",
-    "babel": "babel src -d ./lib --ignore '**/*.test.js'",
     "build": "rollup --config rollup.config.js"
   },
   "repository": {
@@ -37,8 +35,7 @@
     "buffer": "^6.0.3",
     "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "react": ">=16.8.0",
-    "sass-migrator": "^1.5.4"
+    "react": ">=16.8.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

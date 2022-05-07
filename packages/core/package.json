@@ -2,16 +2,14 @@
   "name": "@slider-captcha/core",
   "version": "1.0.0",
   "description": "User-friendly puzzle slider captcha for React and Express",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
-    "/lib",
-    "/index.js"
+    "/dist"
   ],
   "scripts": {
     "test": "jest",
     "lint": "eslint --ext .ts,tsx src",
     "lint:fix": "eslint --ext .ts,tsx --fix src",
-    "babel": "babel src -d ./lib --ignore '**/*.test.js'",
     "build": "npm run lint && npm run babel"
   },
   "repository": {
