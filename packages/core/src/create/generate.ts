@@ -17,10 +17,10 @@ const randScheme = (base: number) => [
   randShade((base - 60) % 360),
 ].map((color) => hslString(color));
 
-const svgRect = (x: number, y: number, gridWidth: number, gridHeight: number, color: any) =>
+const svgRect = (x: number, y: number, gridWidth: number, gridHeight: number, color: string) =>
   `<rect filter="url(#noise)" x="${x}" y="${y}" width="${gridWidth}" height="${gridHeight}" fill="${color}"/>`;
 
-const svgGridPattern = (width: number, height: number, gridWidth: number, gridHeight: number, scheme: any[]) =>
+const svgGridPattern = (width: number, height: number, gridWidth: number, gridHeight: number, scheme: string[]) =>
   [...Array(Math.floor(height / gridHeight)).keys()].map((y) =>
     [...Array(Math.floor(width / gridWidth)).keys()].map((x) =>
       svgRect(x * gridWidth, y * gridHeight, gridWidth, gridHeight, scheme[x % 2])))
