@@ -15,7 +15,7 @@ type Captcha = {
 }
 type Props = {
   fetchCaptcha: () => Promise<Captcha>
-  submitResponse: (_:Response, trail:Trail) => any
+  submitResponse: (_: number, trail:Trail) => any
   text:  {
     challenge:React.ReactNode
   }
@@ -34,7 +34,7 @@ const Card = ({ text, fetchCaptcha, submitResponse }: Props) => {
       }, 300);
     });
   };
-  const completeCaptcha = (response: any, trail: any): Promise<boolean> =>
+  const completeCaptcha = (response: number, trail: Trail): Promise<boolean> =>
     new Promise((resolve) => {
       submitResponse(response, trail).then((verified: boolean) => {
         if (verified) {

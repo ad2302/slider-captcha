@@ -16,7 +16,7 @@ type Captcha = {
 type Props = {
   fetchCaptcha:  () => Promise<Captcha>
   visible: boolean
-  submitResponse: (_:Response, trail:Trail) => any
+  submitResponse: (_:number, trail:Trail) => any
   verified: boolean
   text: {
     challenge:React.ReactNode

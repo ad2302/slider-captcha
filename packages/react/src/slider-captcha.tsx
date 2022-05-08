@@ -17,7 +17,7 @@ const fetchCaptcha = (create: RequestInfo | (() => any)) => () => ((create insta
   }).then((message) => message.json()));
 export type FetchCaptcha = typeof fetchCaptcha
 
-const fetchVerification = (verify: RequestInfo | ((_:Response, trail: Trail) => any)) => (_:Response, trail: Trail) => ((verify instanceof Function)
+const fetchVerification = (verify: RequestInfo | ((_:number, trail: Trail) => any)) => (_:number, trail: Trail) => ((verify instanceof Function)
   ? verify(_, trail) // Use provided promise for verifying captcha
   : fetch(verify, {
     // Verification API URL provided instead
@@ -27,7 +27,7 @@ const fetchVerification = (verify: RequestInfo | ((_:Response, trail: Trail) => 
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      _,
+      response: _,
       trail,
     }),
   }).then((message) => message.json()));
@@ -65,7 +65,7 @@ const SliderCaptcha = ({
       setVisible(_visible);
     }
   }, [_visible, visible]);
-  const submitResponse = (_:Response, trail:Trail) => new Promise((resolve) => {
+  const submitResponse = (_: number, trail:Trail) => new Promise((resolve) => {
     fetchVerification(verify)(_, trail)
       .then((verification: Verification) => {
         if (
