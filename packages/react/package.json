@@ -1,6 +1,6 @@
 {
   "name": "@ad2302/slider-captcha-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "User-friendly puzzle slider captcha for React and Express",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
