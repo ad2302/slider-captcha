@@ -15,18 +15,22 @@ export default {
     {
       file: packageJson.main,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
+      exports:'auto'
     },
     {
       file: packageJson.module,
       format: "esm",
-      sourcemap: true
+      sourcemap: true,
+      exports:'auto'
     }
   ],
   plugins: [
     json(),
     peerDepsExternal(),
-    resolve(),
+    resolve({
+      preferBuiltins: false
+    }),
     typescript({
       "target": 'es2015',
       declaration: true,
