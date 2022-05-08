@@ -1,16 +1,19 @@
 {
-  "name": "@slider-captcha/core",
+  "name": "@ad2302/slider-captcha-core",
   "version": "1.0.0",
   "description": "User-friendly puzzle slider captcha for React and Express",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "rollupVersion": "",
   "files": [
     "/dist"
   ],
+  "types": "dist/typing",
   "scripts": {
     "test": "jest",
     "lint": "eslint --ext .ts,tsx src",
     "lint:fix": "eslint --ext .ts,tsx --fix src",
-    "build": "npm run lint && npm run babel"
+    "build": "rollup --config rollup.config.mjs"
   },
   "repository": {
     "type": "git",
@@ -33,7 +36,7 @@
   "homepage": "https://github.com/adrsch/slider-captcha#readme",
   "dependencies": {
     "nanoid": "^3.3.4",
-    "sharp": "^0.30.4"
+    "sharp": "^0.25.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -41,9 +44,16 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.16.7",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.2",
     "@types/jest": "^27.5.0",
-    "@types/sharp": "^0.30.2",
+    "@types/sharp": "^0.25.1",
     "jest": "^26.4.2",
+    "rollup": "^2.71.1",
+    "rollup-plugin-native": "^1.2.16",
     "ts-jest": "^28.0.1"
   }
 }

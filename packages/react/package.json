@@ -1,8 +1,9 @@
 {
-  "name": "@slider-captcha/react",
+  "name": "@ad2302/slider-captcha-react",
   "version": "1.0.0",
   "description": "User-friendly puzzle slider captcha for React and Express",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "files": [
     "/dist"
   ],
@@ -33,7 +34,6 @@
   "homepage": "https://github.com/adrsch/slider-captcha#readme",
   "dependencies": {
     "buffer": "^6.0.3",
-    "global": "^4.4.0",
     "prop-types": "^15.7.2",
     "react": ">=16.8.0"
   },
@@ -47,6 +47,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.16.7",
+    "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-image": "^2.1.1",
     "@rollup/plugin-json": "^4.1.0",
