@@ -32,6 +32,9 @@
     "url": "https://github.com/adrsch/slider-captcha/issues"
   },
   "homepage": "https://github.com/adrsch/slider-captcha#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "buffer": "^6.0.3",
     "prop-types": "^15.7.2",
